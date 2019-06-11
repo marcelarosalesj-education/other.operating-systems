@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<image schemaversion="6.8" name="LimeJeOS-Debian-Stretch">
+    <description type="system">
+        <author>Marcus Schäfer</author>
+        <contact>ms@suse.de</contact>
+        <specification>Debian Stretch JeOS</specification>
+    </description>
+    <preferences>
+        <version>9.2</version>
+        <packagemanager>apt-get</packagemanager>
+        <bootsplash-theme>fade-in</bootsplash-theme>
+        <bootloader-theme>starfield</bootloader-theme>
+        <locale>en_US</locale>
+        <keytable>us</keytable>
+        <timezone>Europe/Berlin</timezone>
+        <type image="vmx" primary="true" filesystem="ext4" bootloader="grub2" firmware="efi"/>
+    </preferences>
+	<preferences>
+			<type image="vmx" filesystem="ext4" bootloader="grub2" kernelcmdline="splash" firmware="efi"/>
+			<type image="oem" filesystem="ext4" initrd_system="dracut" installiso="true" bootloader="grub2" kernelcmdline="splash" firmware="efi">
+				<oemconfig>
+					<oem-systemsize>2048</oem-systemsize>
+					<oem-swap>true</oem-swap>
+					<oem-device-filter>/dev/ram</oem-device-filter>
+					<oem-multipath-scan>false</oem-multipath-scan>
+				</oemconfig>
+				<machine memory="512" guestOS="suse" HWversion="4">
+					<vmdisk id="0" controller="ide"/>
+					<vmnic driver="e1000" interface="0" mode="bridged"/>
+				</machine>
+			</type>
+	</preferences>
+    <users>
+        <user password="$1$wYJUgpM5$RXMMeASDc035eX.NbYWFl0" home="/root" name="root" groups="root"/>
+    </users>
+    <repository type="apt-deb" distribution="stretch" components="main contrib non-free">
+        <source path="http://ftp.halifax.rwth-aachen.de/debian"/>
+    </repository>
+    <repository type="apt-deb">
+        <source path="obs://Virtualization:Appliances:Builder/Debian_9.0"/>
+    </repository>
+    <repository type="apt-deb">
+        <source path="obs://home:marcelarosalesj/Debian_9.0"/>
+    </repository>
+    <packages type="image">
+        <package name="grub-theme-starfield"/>
+        <package name="plymouth-themes"/>
+        <package name="vim"/>
+        <package name="plymouth"/>
+        <package name="grub-efi-amd64"/>
+        <package name="dracut"/>
+        <package name="xz-utils"/>
+        <package name="binutils"/>
+        <package name="linux-image-amd64"/>
+        <package name="isolinux"/>
+        <package name="syslinux"/>
+        <package name="syslinux-common"/>
+        <package name="init"/>
+        <package name="gnupg"/>
+        <package name="iproute2"/>
+        <package name="iptables"/>
+        <package name="iputils-ping"/>
+        <package name="ifupdown"/>
+        <package name="isc-dhcp-client"/>
+        <package name="netbase"/>
+        <package name="bsdmainutils"/>
+        <package name="fm-common"/>
+    </packages>
+    <packages type="bootstrap">
+        <package name="initramfs-tools"/>
+        <package name="linux-image-amd64"/>
+        <package name="grub2"/>
+    </packages>
+	<packages type="oem">
+			<package name="gfxboot-branding-openSUSE"/>
+			<package name="dracut-kiwi-oem-repart"/>
+			<package name="dracut-kiwi-oem-dump"/>
+	</packages>
+</image>
